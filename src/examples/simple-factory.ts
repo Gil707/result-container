@@ -1,37 +1,19 @@
-import {Result} from '../type';
 import {Fail, Success} from '../class';
-
-/* --- Common types and functions start --- */
-type Operation = {
-	type: string;
-	name: string;
-};
-
-type OperationError = {
-	error: string;
-};
-
-const workWithSuccess = (success: Operation) => console.log(`Name: ${success.name}, type: ${success.type}`);
-const workWithFail = (fail: OperationError) => console.log(`Error content: ${fail.error}`);
-/* --- Common types and functions end --- */
-
-interface IDetailsFactory {
-	make(): Result<Operation, OperationError>;
-}
+import {IDetailsFactory, Operation, workWithFail, workWithSuccess} from './common';
 
 class DetailsFactory implements IDetailsFactory {
-	private readonly _type: string;
+	private readonly _type: number;
 	private _operation: Operation;
 
-	constructor(type: string) {
+	constructor(type: number) {
 		this._type = type;
 	}
 
 	public make() {
 		switch (this._type) {
-			case '1': this._operation = {type: '1', name: 'First'}; break;
-			case '2': this._operation = {type: '2', name: 'Second'}; break;
-			case '3': this._operation = {type: '3', name: 'Third'}; break;
+			case 1: this._operation = {type: 1, name: 'First'}; break;
+			case 2: this._operation = {type: 2, name: 'Second'}; break;
+			case 3: this._operation = {type: 3, name: 'Third'}; break;
 			default: return new Fail({error: 'Error from details'});
 		}
 
@@ -49,5 +31,5 @@ const log = (factory: DetailsFactory) => {
 
 };
 
-const detailsFactory = new DetailsFactory('3');
+const detailsFactory = new DetailsFactory(3);
 log(detailsFactory);

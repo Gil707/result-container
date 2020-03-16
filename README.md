@@ -33,3 +33,8 @@ if (data.isErr()) {
 
 return workWithSuccess(data.result);
 ```
+
+### Examples
+`src/examples/`
+* `simple-factory` - business logic with 1 level (factory);
+* `factory-with-builder` - business logic with 2 levels (factory with builder inside it);

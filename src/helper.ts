@@ -40,10 +40,34 @@ export const option = <R, E>(input: Result<R, E>) =>
 	/**
 	 * @param onResult: R | E | void - result callback
 	 */
-	(onResult: (r: R) => R | E | void) => {
+	(onResult: (r: R | E) => R | E | void) => {
 		if (input instanceof Success) {
 			return onResult(input.result);
 		}
 
 		return null;
 	};
+
+/**
+ * Functional wrapper for Success class
+ * @param data: R - input data
+ *
+ * Example: return success from service
+ *  if (user.account) {
+ *      const data = {...user.account, name: 'New Name'};
+ *
+ *      return success(data);
+ *  }
+ */
+export const success = <R>(data: R) => new Success(data);
+
+/**
+ * Functional wrapper for Fail class
+ * @param data: R - input data
+ *
+ * Example: return failure from service
+ *  if (!user.account) {
+ *      return failure({data: null, msg: 'User not valid, empty account!'});
+ *  }
+ */
+export const failure = <E>(data: E) => new Fail(data);

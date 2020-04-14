@@ -1,7 +1,7 @@
 import {Fail, Success} from '../class';
 import {IDetailsFactory, Operation, workWithFail, workWithSuccess} from './common';
 
-class DetailsFactory implements IDetailsFactory {
+export class DetailsFactory implements IDetailsFactory {
 	private readonly _type: number;
 	private _operation: Operation;
 
@@ -27,8 +27,8 @@ const log = (factory: DetailsFactory) => {
 	if (data.isErr()) {
 		return workWithFail(data.error);
 	}
-	return workWithSuccess(data.result);
 
+	return workWithSuccess(data.result);
 };
 
 const detailsFactory = new DetailsFactory(3);

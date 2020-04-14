@@ -49,6 +49,34 @@ export const option = <R, E>(input: Result<R, E>) =>
 	};
 
 /**
+ * matchPromise wrapper, wrap into match() and returns success or fail if there are no results
+ *
+ * Example:
+ * (async () => {
+ *		const stateDataResult = await matchPromise(new DetailsFactory(7));
+ *		console.log('Received data (matchPromise):', stateDataResult); // success | fail
+ *	})();
+ *
+ * @param input: Promise<any> | Result<R, E>
+ */
+export const matchPromise = async <R, E>(input: Promise<any> | Result<R, E>) => (
+	match(isPromise(input) && (input instanceof Promise)
+		? await input
+			.then((data) => data)
+			.catch(() => failure('Error'))
+		: input
+	)(
+		(res) => res,
+		(err) => err
+	)
+);
+
+/**
+ * Helper for promise check
+ */
+const isPromise = (value) => Boolean(value && (value instanceof Promise) && typeof value.then === 'function');
+
+/**
  * Functional wrapper for Success class
  * @param data: R - input data
  *

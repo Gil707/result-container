@@ -33,6 +33,18 @@ if (data.isErr()) {
 
 return workWithSuccess(data.result);
 ```
+Alternative variant with matcher/option, (returns callback)
+```
+const factory = new Factory();
+const data = factory.make();
+
+match(account)(
+    (result) => workWithSuccess(data),
+    (e) => workWithFail(e)
+);
+
+option(account)((data) => console.log(data));
+```
 
 ### Examples
 `src/examples/`

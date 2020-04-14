@@ -60,7 +60,7 @@ export const option = <R, E>(input: Result<R, E>) =>
  * @param input: Promise<any> | Result<R, E>
  */
 export const matchPromise = async <R, E>(input: Promise<any> | Result<R, E>) => (
-	match(isPromise(input) && (input instanceof Promise)
+	match(isPromise(input)
 		? await input
 			.then((data) => data)
 			.catch(() => failure('Error'))

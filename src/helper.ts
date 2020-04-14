@@ -60,7 +60,7 @@ export const option = <R, E>(input: Result<R, E>) =>
  * @param input: Promise<any> | Result<R, E>
  */
 export const matchPromise = async <R, E>(input: Promise<any> | Result<R, E>) => (
-	match(isPromise(input)
+	match((input instanceof Promise && typeof input.then === 'function')
 		? await input
 			.then((data) => data)
 			.catch(() => failure('Error'))
@@ -70,11 +70,6 @@ export const matchPromise = async <R, E>(input: Promise<any> | Result<R, E>) => 
 		(err) => err
 	)
 );
-
-/**
- * Helper for promise check
- */
-const isPromise = (value) => Boolean(value && (value instanceof Promise) && typeof value.then === 'function');
 
 /**
  * Functional wrapper for Success class
